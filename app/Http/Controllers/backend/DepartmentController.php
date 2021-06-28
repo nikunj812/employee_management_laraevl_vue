@@ -4,11 +4,10 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Country;
-use App\Http\Requests\CountryStoreRequest;
+use App\Models\Department;
+use App\Http\Requests\DepartmentStoreRequest;
 
-
-class CountryController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +16,11 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
-        $countries = Country::all();
+        $departments = Department::all();
         if($request->has('search')){
-            $countries = Country::where('name' , 'like' , "%{$request->search}%")->orWhere('country_code' , 'like' , "%{$request->search}%")->get();
+            $departments = Department::where('name' , 'like' , "%{$request->search}%")->get();
         }
-        return view('countries.index',compact('countries'));
+        return view('departments.index',compact('departments'));
 
     }
 
@@ -32,7 +31,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        return view('countries.create');
+        return view('departments.create');
     }
 
     /**
@@ -41,12 +40,12 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CountryStoreRequest $request)
+    public function store(DepartmentStoreRequest $request)
     {
         $validated = $request->validated();
-        Country::create($validated);
+        Department::create($validated);
 
-        return redirect()->route('countries.index')->with('message','Country Created');
+        return redirect()->route('departments.index')->with('message','Department Created');
     }
 
     /**
@@ -66,9 +65,9 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Country $country)
+    public function edit(Department $department)
     {
-        return view('countries.edit',compact('country'));
+        return view('departments.edit',compact('department'));
     }
 
     /**
@@ -78,12 +77,12 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CountryStoreRequest $request, Country $country)
+    public function update(DepartmentStoreRequest $request, Department $department)
     {
         $validated = $request->validated();
-        $country->update($validated);
+        $department->update($validated);
 
-        return redirect()->route('countries.index')->with('message','Country Updated');
+        return redirect()->route('departments.index')->with('message','Department Updated');
     }
 
     /**
@@ -92,11 +91,11 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy(Department $department)
     {
-        $country->delete();
+        $department->delete();
 
-        return redirect()->route('countries.index')->with('message','Country deleted');
+        return redirect()->route('departments.index')->with('message','Department deleted');
 
     }
 }

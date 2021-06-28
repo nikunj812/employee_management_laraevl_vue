@@ -4,17 +4,25 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\State;
+use App\Models\City;
+use App\Http\Requests\CityStoreRequest;
 
-class CityControllr extends Controller
+class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $cities = City::all();
+        if($request->has('search')){
+            $cities = City::where('name' , 'like' , "%{$request->search}%")->get();
+        }
+        return view('cities.index',compact('cities'));
     }
 
     /**
@@ -24,7 +32,8 @@ class CityControllr extends Controller
      */
     public function create()
     {
-        //
+        $states = State::all();
+        return view('cities.create', compact('states'));
     }
 
     /**
@@ -33,9 +42,12 @@ class CityControllr extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CityStoreRequest $request)
     {
-        //
+        $validated = $request->validated();
+        City::create($validated);
+
+        return redirect()->route('cities.index')->with('message','City Created');
     }
 
     /**
@@ -55,9 +67,10 @@ class CityControllr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(City $city)
     {
-        //
+        $states = State::all();
+        return view('cities.edit',compact('city','states'));
     }
 
     /**
@@ -67,9 +80,12 @@ class CityControllr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CityStoreRequest $request, City $city)
     {
-        //
+        $validated = $request->validated();
+        $city->update($validated);
+
+        return redirect()->route('cities.index')->with('message','City Updated');
     }
 
     /**
@@ -78,8 +94,10 @@ class CityControllr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(City $city)
     {
-        //
+        $city->delete();
+
+        return redirect()->route('cities.index')->with('message','City deleted');
     }
 }

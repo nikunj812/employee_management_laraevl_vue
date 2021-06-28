@@ -4,17 +4,25 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\State;
+use App\Models\Country;
+use App\Http\Requests\StateStoreRequest;
 
-class StateControllr extends Controller
+class StateController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $states = State::all();
+        if($request->has('search')){
+            $states = State::where('name' , 'like' , "%{$request->search}%")->get();
+        }
+        return view('states.index',compact('states'));
     }
 
     /**
@@ -24,7 +32,8 @@ class StateControllr extends Controller
      */
     public function create()
     {
-        //
+        $countries = Country::all();
+        return view('states.create', compact('countries'));
     }
 
     /**
@@ -33,9 +42,12 @@ class StateControllr extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StateStoreRequest $request)
     {
-        //
+        $validated = $request->validated();
+        State::create($validated);
+
+        return redirect()->route('states.index')->with('message','State Created');
     }
 
     /**
@@ -55,9 +67,10 @@ class StateControllr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(State $state)
     {
-        //
+        $countries = Country::all();
+        return view('states.edit',compact('state','countries'));
     }
 
     /**
@@ -67,9 +80,12 @@ class StateControllr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StateStoreRequest $request, State $state)
     {
-        //
+        $validated = $request->validated();
+        $state->update($validated);
+
+        return redirect()->route('states.index')->with('message','State Updated');
     }
 
     /**
@@ -78,8 +94,10 @@ class StateControllr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(State $state)
     {
-        //
+        $state->delete();
+
+        return redirect()->route('states.index')->with('message','State deleted');
     }
 }
