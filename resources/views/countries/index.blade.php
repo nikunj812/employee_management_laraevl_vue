@@ -49,7 +49,7 @@
                         <th scope="row">{{$country->id}}</th>
                         <td>{{$country->country_code}}</td>
                         <td>{{$country->name}}</td>
-                        <td><a href="{{route('users.edit', $country->id)}}" class="float-right"><button type="button" class="btn btn-secondary">Edit</button></a></td>
+                        <td><a href="{{route('countries.edit', $country->id)}}" class="float-right"><button type="button" class="btn btn-secondary">Edit</button></a></td>
                       </tr>
                       @endforeach
                     </tbody>

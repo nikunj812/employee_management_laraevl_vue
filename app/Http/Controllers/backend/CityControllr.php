@@ -4,25 +4,17 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Country;
-use App\Http\Requests\CountryStoreRequest;
 
-
-class CountryController extends Controller
+class CityControllr extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $countries = Country::all();
-        if($request->has('search')){
-            $countries = Country::where('name' , 'like' , "%{$request->search}%")->orWhere('country_code' , 'like' , "%{$request->search}%")->get();
-        }
-        return view('countries.index',compact('countries'));
-
+        //
     }
 
     /**
@@ -32,7 +24,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        return view('countries.create');
+        //
     }
 
     /**
@@ -41,12 +33,9 @@ class CountryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CountryStoreRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        Country::create($validated);
-
-        return redirect()->route('countries.index')->with('message','Country Created');
+        //
     }
 
     /**
@@ -66,9 +55,9 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Country $country)
+    public function edit($id)
     {
-        return view('countries.edit',compact('country'));
+        //
     }
 
     /**
@@ -78,12 +67,9 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CountryStoreRequest $request, Country $country)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validated();
-        $country->update($validated);
-
-        return redirect()->route('countries.index')->with('message','Country Created');
+        //
     }
 
     /**
@@ -92,11 +78,8 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
-        $country->delete();
-
-        return redirect()->route('countries.index')->with('message','Country Created');
-
+        //
     }
 }
