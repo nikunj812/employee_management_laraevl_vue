@@ -132,6 +132,27 @@ import Datepicker from 'vuejs-datepicker';
 export default {
     components: {
         Datepicker
-  }
+    },
+    data(){
+        return{
+            countries : [];
+            states : [];
+            cities : [];
+            department : [];
+        }
+    },
+    created(){
+        this.getCountries();
+    }
+    methods:{
+        getCountries(){
+            axios.get('/api/employees/countries')
+            .then(response => {
+                this.countries = response.data
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    }
 }
 </script>
