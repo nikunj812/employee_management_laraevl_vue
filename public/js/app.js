@@ -2009,10 +2009,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  data: function data() {
+    return {
+      countries: [],
+      states: [],
+      cities: [],
+      department: [],
+      form: {
+        first_name: '',
+        last_name: '',
+        middel_name: '',
+        address: '',
+        department_id: '',
+        country_id: '',
+        state_id: '',
+        city_id: '',
+        zip_code: '',
+        birth_date: null,
+        hired_date: null
+      }
+    };
+  },
+  created: function created() {
+    this.getCountries();
+  },
+  methods: {
+    getCountries: function getCountries() {
+      var _this = this;
+
+      axios.get('/api/employees/countries').then(function (response) {
+        console.log('djfhdj');
+        _this.countries = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -37963,13 +38002,84 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(5),
                 _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-md-4 col-form-label text-md-right",
+                      attrs: { for: "country" }
+                    },
+                    [_vm._v("Country")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.country_id,
+                            expression: "form.country_id"
+                          }
+                        ],
+                        staticClass: "form-control ",
+                        attrs: {
+                          id: "country",
+                          type: "text",
+                          name: "country_id",
+                          required: "",
+                          autocomplete: "country",
+                          autofocus: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "country_id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "", selected: "" } }, [
+                          _vm._v(" Choose Country")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.countries, function(country) {
+                          return _c(
+                            "option",
+                            {
+                              key: country.id,
+                              attrs: { value: "" },
+                              domProps: { value: country.id }
+                            },
+                            [_vm._v(_vm._s(country.name))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
                 _vm._m(6),
                 _vm._v(" "),
                 _vm._m(7),
                 _vm._v(" "),
                 _vm._m(8),
-                _vm._v(" "),
-                _vm._m(9),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group row" }, [
                   _c(
@@ -38021,7 +38131,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(10)
+                _vm._m(9)
               ])
             ])
           ])
@@ -38185,7 +38295,7 @@ var staticRenderFns = [
             attrs: {
               id: "department",
               type: "text",
-              name: "department",
+              name: "department_id",
               required: "",
               autocomplete: "department",
               autofocus: ""
@@ -38194,43 +38304,6 @@ var staticRenderFns = [
           [
             _c("option", { attrs: { value: "", selected: "" } }, [
               _vm._v("Choose Department")
-            ])
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-4 col-form-label text-md-right",
-          attrs: { for: "country" }
-        },
-        [_vm._v("Country")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c(
-          "select",
-          {
-            staticClass: "form-control ",
-            attrs: {
-              id: "country",
-              type: "text",
-              name: "country",
-              required: "",
-              autocomplete: "country",
-              autofocus: ""
-            }
-          },
-          [
-            _c("option", { attrs: { value: "", selected: "" } }, [
-              _vm._v("Choose Country")
             ])
           ]
         )
@@ -38259,7 +38332,7 @@ var staticRenderFns = [
             attrs: {
               id: "state",
               type: "text",
-              name: "state",
+              name: "state_id",
               required: "",
               autocomplete: "state",
               autofocus: ""
@@ -38296,7 +38369,7 @@ var staticRenderFns = [
             attrs: {
               id: "city",
               type: "text",
-              name: "city",
+              name: "city_id",
               required: "",
               autocomplete: "city",
               autofocus: ""

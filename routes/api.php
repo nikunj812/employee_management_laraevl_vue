@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Https\Controller\EmployeesDataController;
+use App\Http\Controllers\backend\EmployeesDataController;
 
 /*
 |--------------------------------------------------------------------------

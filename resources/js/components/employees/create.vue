@@ -50,7 +50,7 @@
                                 <label for="department" class="col-md-4 col-form-label text-md-right">DepartMent</label>
     
                                 <div class="col-md-6">
-                                    <select id="department" type="text" class="form-control " name="department"  required autocomplete="department" autofocus>
+                                    <select id="department" type="text" class="form-control " name="department_id"  required autocomplete="department" autofocus>
                                         <option value="" selected>Choose Department</option>
                                     </select>
                                 </div>
@@ -60,8 +60,9 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-right">Country</label>
     
                                 <div class="col-md-6">
-                                    <select id="country" type="text" class="form-control " name="country"  required autocomplete="country" autofocus>
-                                        <option value="" selected>Choose Country</option>
+                                    <select v-model="form.country_id" id="country" type="text" class="form-control " name="country_id"  required autocomplete="country" autofocus>
+                                        <option value="" selected> Choose Country</option>
+                                        <option value="" v-for="country in countries"  :key="country.id"  :value="country.id" >{{country.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -70,7 +71,7 @@
                                 <label for="state" class="col-md-4 col-form-label text-md-right">State</label>
     
                                 <div class="col-md-6">
-                                    <select id="state" type="text" class="form-control " name="state"  required autocomplete="state" autofocus>
+                                    <select id="state" type="text" class="form-control " name="state_id"  required autocomplete="state" autofocus>
                                         <option value="" selected>Choose State</option>
                                     </select>
                                 </div>
@@ -80,7 +81,7 @@
                                 <label for="city" class="col-md-4 col-form-label text-md-right">City</label>
     
                                 <div class="col-md-6">
-                                    <select id="city" type="text" class="form-control " name="city"  required autocomplete="city" autofocus>
+                                    <select id="city" type="text" class="form-control " name="city_id"  required autocomplete="city" autofocus>
                                         <option value="" selected>Choose City</option>
                                     </select>
                                 </div>
@@ -101,6 +102,8 @@
                                    <datepicker  input-class="form-control " name="birth_date"></datepicker>
                                 </div>
                             </div>
+
+                            
 
                             <div class="form-group row">
                                 <label for="department" class="col-md-4 col-form-label text-md-right">Hired Date</label>
@@ -135,19 +138,33 @@ export default {
     },
     data(){
         return{
-            countries : [];
-            states : [];
-            cities : [];
-            department : [];
+            countries : [],
+            states : [],
+            cities : [],
+            department : [],
+            form:{
+                first_name: '',
+                last_name: '',
+                middel_name: '',
+                address: '',
+                department_id: '',
+                country_id: '',
+                state_id: '',
+                city_id: '',
+                zip_code: '',
+                birth_date: null,
+                hired_date: null,
+            }
         }
     },
     created(){
         this.getCountries();
-    }
+    },
     methods:{
         getCountries(){
             axios.get('/api/employees/countries')
             .then(response => {
+                console.log('djfhdj');
                 this.countries = response.data
             }).catch(error => {
                 console.log(error);
