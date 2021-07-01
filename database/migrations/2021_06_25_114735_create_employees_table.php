@@ -19,8 +19,8 @@ class CreateEmployeesTable extends Migration
             $table->string('last_name');
             $table->string('middle_name')->nullable();
             $table->string('address');
-            $table->unsignedBigInteger('departmant_id');
-            $table->foreign('departmant_id')->references('id')->on('departments'); 
+            $table->unsignedBigInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments'); 
             $table->unsignedBigInteger('country_id');
             $table->foreign('country_id')->references('id')->on('countries'); 
             $table->unsignedBigInteger('state_id');

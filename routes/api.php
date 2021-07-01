@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backend\EmployeesDataController;
+use App\Http\Controllers\backend\EmployeesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/employees/countries',[EmployeesDataController::class, 'countries']);
-Route::get('/employees/states',[EmployeesDataController::class, 'states']);
-Route::get('/employees/cities',[EmployeesDataController::class, 'cities']);
+Route::get('/employees/{country}/states',[EmployeesDataController::class, 'states']);
+Route::get('/employees/{state}/cities',[EmployeesDataController::class, 'cities']);
 Route::get('/employees/departments',[EmployeesDataController::class, 'departments']);
+
+Route::post('/employees',[EmployeesController ::class, 'store']);
