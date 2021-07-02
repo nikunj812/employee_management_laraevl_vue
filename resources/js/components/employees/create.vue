@@ -178,7 +178,6 @@ export default {
         getstates(){
             axios.get(`/api/employees/${this.form.country_id}/states`)
             .then(response => {
-                console.log(response.data);
                 this.states = response.data
             }).catch(error => {
                 console.log(error);
@@ -217,7 +216,7 @@ export default {
                 zip_code : this.form.zip_code,
 
             }).then(response => {
-                console.log(response);
+                this.$router.push({name: 'EmployeesIndex'});
             }).catch(error => {
                 console.log(error);
             }) 
