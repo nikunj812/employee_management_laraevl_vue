@@ -2279,7 +2279,6 @@ __webpack_require__.r(__webpack_exports__);
       states: [],
       cities: [],
       departments: [],
-      message: '',
       form: {
         first_name: '',
         last_name: '',
@@ -2368,11 +2367,12 @@ __webpack_require__.r(__webpack_exports__);
         hired_date: this.format_date(this.form.hired_date),
         zip_code: this.form.zip_code
       }).then(function (response) {
-        _this6.showMessage = true;
-        _this6.message = "dfgsdf sdfgsdfg sdfg";
-
         _this6.$router.push({
-          name: 'EmployeesIndex'
+          name: 'EmployeesIndex',
+          params: {
+            message: response.data,
+            showMessage: true
+          }
         });
       })["catch"](function (error) {
         console.log(error);
@@ -2474,11 +2474,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['message', 'showMessage'],
   data: function data() {
     return {
       employees: [],
       showMessage: false,
-      message: ''
+      message: '',
+      search: null
     };
   },
   created: function created() {
@@ -2488,7 +2490,11 @@ __webpack_require__.r(__webpack_exports__);
     getEmployees: function getEmployees() {
       var _this = this;
 
-      axios.get('/api/employees').then(function (res) {
+      axios.get('/api/employees', {
+        params: {
+          search: this.search
+        }
+      }).then(function (res) {
         _this.employees = res.data.data;
       })["catch"](function (error) {
         console.log(error);
@@ -2629,7 +2635,8 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/employees',
   name: 'EmployeesIndex',
-  component: _components_employees_index__WEBPACK_IMPORTED_MODULE_0__.default
+  component: _components_employees_index__WEBPACK_IMPORTED_MODULE_0__.default,
+  props: true
 }, {
   path: '/employees/create',
   name: 'EmployeesCreate',
@@ -61192,7 +61199,44 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "card-header" }, [
               _c("div", { staticClass: "row" }, [
-                _vm._m(1),
+                _c("div", { staticClass: "col" }, [
+                  _c("form", [
+                    _c("div", { staticClass: "form-row align-item-center" }, [
+                      _c("div", { staticClass: "col" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.search,
+                              expression: "search"
+                            }
+                          ],
+                          staticClass: "form-control mb-2",
+                          attrs: {
+                            type: "text",
+                            name: "search",
+                            placeholder: "Search"
+                          },
+                          domProps: { value: _vm.search },
+                          on: {
+                            keyup: function($event) {
+                              return _vm.getEmployees()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.search = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(1)
+                    ])
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -61299,22 +61343,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col" }, [
-      _c("form", [
-        _c("div", { staticClass: "form-row align-item-center" }, [
-          _c("div", { staticClass: "col" }, [
-            _c("input", {
-              staticClass: "form-control mb-2",
-              attrs: { type: "text", name: "search", placeholder: "Search" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col" }, [
-            _c("button", { staticClass: "btn btn-primary mb-2" }, [
-              _vm._v("Search")
-            ])
-          ])
-        ])
-      ])
+      _c("button", { staticClass: "btn btn-primary mb-2" }, [_vm._v("Search")])
     ])
   },
   function() {

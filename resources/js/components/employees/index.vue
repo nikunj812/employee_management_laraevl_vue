@@ -19,7 +19,7 @@
                             <form>
                                 <div class="form-row align-item-center">
                                     <div class="col">
-                                        <input type="text" name="search" class="form-control mb-2" placeholder="Search"/>
+                                        <input type="text" v-model="search" @keyup="getEmployees()" name="search" class="form-control mb-2" placeholder="Search"/>
                                     </div>
                                     <div class="col">
                                         <button class="btn btn-primary mb-2">Search</button>
@@ -75,11 +75,13 @@
 <script>
 
 export default {
+    props: ['message','showMessage'],
     data(){
         return{
             employees:[],
             showMessage: false,
             message: '',
+            search:null,
         }
     },
     created(){
@@ -87,7 +89,11 @@ export default {
     },
     methods:{
         getEmployees(){
-            axios.get('/api/employees')
+            axios.get('/api/employees', {
+                params: {
+                    search: this.search
+                }
+            })
             .then(res => {  
                 this.employees = res.data.data
             }).catch(error => {

@@ -16,9 +16,12 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $employees = Employee::all();
+        if($request->has('search')){
+           $employees = Employee::where('first_name', 'like' , "%{$request->search}%")->orwhere('last_name', 'like',"%{$request->search}%")->get();
+        }
         return EmployeeResource::collection($employees);
     }
 

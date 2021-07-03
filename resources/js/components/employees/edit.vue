@@ -147,7 +147,6 @@ export default {
             states : [],
             cities : [],
             departments : [],
-            message: '',
             form:{
                 first_name: '',
                 last_name: '',
@@ -230,9 +229,10 @@ export default {
                 zip_code : this.form.zip_code,
 
             }).then(response => {
-                this.showMessage = true;
-                this.message = "dfgsdf sdfgsdfg sdfg";
-                this.$router.push({name: 'EmployeesIndex'});
+                this.$router.push({name: 'EmployeesIndex',  params: {
+                                        message: response.data,
+                                        showMessage: true
+                                    }});
 
             }).catch(error => {
                 console.log(error);

@@ -6,7 +6,8 @@ export const routes = [
     {
         path: '/employees',
         name: 'EmployeesIndex',
-        component: EmployeesIndex
+        component: EmployeesIndex,
+        props: true 
     },
     {
         path: '/employees/create',
